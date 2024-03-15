@@ -15,7 +15,7 @@ type TestStruct struct {
 
 func TestReadJSON(t *testing.T) {
 	// Create a new http.Request with a JSON body
-	req := httptest.NewRequest("GET", "http://example.com/foo", bytes.NewBuffer([]byte(`{"field1":"test", "field2":123}`)))
+	req := httptest.NewRequest("GET", "http://example.com/foo", bytes.NewBuffer([]byte(`{"field1":"test", "field2":1234}`)))
 	w := httptest.NewRecorder()
 
 	// Create a new TestStruct to hold the decoded JSON
@@ -30,8 +30,8 @@ func TestReadJSON(t *testing.T) {
 	}
 
 	// Check that the decoded JSON matches the expected values
-	if data.Field1 != "test" || data.Field2 != 123 {
-		t.Errorf("expected field1=test and field2=123, got field1=%s and field2=%d", data.Field1, data.Field2)
+	if data.Field1 != "test" || data.Field2 != 1234 {
+		t.Errorf("expected field1=test and field2=1234, got field1=%s and field2=%d", data.Field1, data.Field2)
 	}
 }
 func TestWriteJSON(t *testing.T) {
