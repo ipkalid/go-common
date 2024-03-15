@@ -3,8 +3,10 @@ package json_helpers
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
+	"strings"
 )
 
 type JsonResponse struct {
@@ -70,4 +72,15 @@ func ErrorJSON(w http.ResponseWriter, err error, status ...int) error {
 	payload.Message = err.Error()
 
 	return WriteJSON(w, statusCode, payload)
+}
+
+func GetBearerTokenFromHeader(r *http.Request) (string, error) {
+	AppHeader := r.Header.Get("Authorization")
+	splitted := strings.Split(AppHeader, "Bearer ")
+	if len(splitted) != 2 {
+		error := fmt.Errorf("unauthorized")
+		return "", error
+	}
+	tokenString := splitted[1]
+	return tokenString, nil
 }
